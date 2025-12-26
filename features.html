@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Özellikler | SEBA Akademi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #0f172a;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --brand: #3b82f6;
+      --brand-2: #7c3aed;
+      --glass: rgba(255, 255, 255, .06);
+      --border: rgba(255, 255, 255, .08);
+      --radius: 18px;
+      --shadow-soft: 0 10px 28px rgba(0, 0, 0, .28);
+      --shadow-strong: 0 18px 60px rgba(0, 0, 0, .36);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .18), transparent),
+        radial-gradient(1000px 500px at 110% 10%, rgba(124, 58, 237, .18), transparent),
+        radial-gradient(900px 520px at 40% 120%, rgba(34, 197, 94, .08), transparent),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin-inline: auto
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(1.2) blur(10px);
+      background: linear-gradient(to bottom, rgba(11, 18, 32, .92), rgba(11, 18, 32, .55));
+      border-bottom: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: 14px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: max-content
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      cursor: pointer;
+      font-weight: 650;
+      transition: .18s transform, .18s filter, .18s background;
+      user-select: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05)
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      border-color: transparent
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, .04)
+    }
+
+    /* PAGE */
+    main {
+      padding: 40px 0 70px
+    }
+
+    .section {
+      margin-top: 22px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .03));
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow-strong);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(620px 260px at 10% 0%, rgba(59, 130, 246, .22), transparent 60%),
+        radial-gradient(650px 280px at 90% 10%, rgba(124, 58, 237, .20), transparent 60%);
+      pointer-events: none;
+      opacity: .9;
+    }
+
+    .card>* {
+      position: relative
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .hero-left {
+      padding: 8px 4px 2px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+      font-weight: 800;
+      font-size: 12.5px;
+      margin-bottom: 12px;
+    }
+
+    .kdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, .12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -.35px;
+      line-height: 1.18
+    }
+
+    .lead {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 56ch
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px
+    }
+
+    .hero-right {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, .18);
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .mini-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .mini-ico {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, .22), rgba(124, 58, 237, .18));
+      border: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .mini-item b {
+      display: block
+    }
+
+    .mini-item p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13.5px
+    }
+
+    /* FEATURE CARDS (top 3) */
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px
+    }
+
+    .feat {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+      transition: .18s transform, .18s background, .18s border-color;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feat:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, .05);
+      border-color: rgba(255, 255, 255, .14);
+    }
+
+    .feat .head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, .25), rgba(124, 58, 237, .25));
+      border: 1px solid rgba(255, 255, 255, .08)
+    }
+
+    .feat h3 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -.2px
+    }
+
+    .feat p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13.8px
+    }
+
+    /* FLOW */
+    .flow {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .step {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .step .n {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .04);
+      margin-bottom: 10px;
+    }
+
+    .step b {
+      display: block
+    }
+
+    .step p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13.8px
+    }
+
+    /* STATS */
+    .stats {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .stat .v {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.3px
+    }
+
+    .stat .k {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 2px
+    }
+
+    /* MORE FEATURES */
+    .grid4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 14px
+    }
+
+    .fcard {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+      transition: .18s transform, .18s border-color, .18s background;
+      min-height: 120px;
+    }
+
+    .fcard:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .05)
+    }
+
+    .fcard .toprow {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .fcard .sico {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .fcard b {
+      display: block;
+      margin-top: 10px
+    }
+
+    .fcard p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13.5px
+    }
+
+    /* CTA */
+    .cta {
+      margin-top: 18px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: linear-gradient(135deg, rgba(59, 130, 246, .18), rgba(124, 58, 237, .14));
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta h2 {
+      margin: 0;
+      font-size: 18px
+    }
+
+    .cta p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 64ch
+    }
+
+    .cta .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    /* Responsive */
+    @media(max-width:980px) {
+      .hero {
+        grid-template-columns: 1fr
+      }
+
+      .grid3 {
+        grid-template-columns: 1fr
+      }
+
+      .flow {
+        grid-template-columns: 1fr
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .grid4 {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:520px) {
+      .stats {
+        grid-template-columns: 1fr
+      }
+
+      .grid4 {
+        grid-template-columns: 1fr
+      }
+
+      h1 {
+        font-size: 28px
+      }
+    }
+
+    .logo-img {
+      width: 34px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="seba.png" alt="SEBA Akademi" class="logo-img">
+        <b>SEBA Akademi</b>
+      </a>
+      <div class="nav-links">
+        <a href="features.html" class="btn">Özellikler</a>
+        <a href="catalog.html" class="btn">Konu Kataloğu</a>
+        <a href="faq.html" class="btn">SSS</a>
+        <a href="login.html" class="btn btn-primary">Giriş Yap</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="card">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-left">
+          <span class="kicker"><span class="kdot"></span> YKS için tek panel: öğren • test et • analiz et</span>
+          <h1>SEBA Akademi ile çalışman <span
+              style="background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">daha
+              düzenli</span> ve daha ölçülebilir.</h1>
+          <p class="lead">
+            Video dersler, konu testleri, net analizi, çalışma planı ve not alma araçlarıyla
+            TYT/AYT sürecini tek ekranda yönet.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="login.html">🚀 Hemen Başla</a>
+            <a class="btn btn-ghost" href="catalog.html">📚 Konu Kataloğunu Gör</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <b style="display:block;margin-bottom:6px">Bugün neler yapabilirsin?</b>
+          <div class="mini-list">
+            <div class="mini-item">
+              <div class="mini-ico">🎯</div>
+              <div>
+                <b>Hedef belirle</b>
+                <p>TYT/AYT net hedefini seç, panel otomatik takip etsin.</p>
+              </div>
+            </div>
+            <div class="mini-item">
+              <div class="mini-ico">🧠</div>
+              <div>
+                <b>Konuya odaklan</b>
+                <p>Konu kataloğundan ders seç, konu listelerini aç-kapat.</p>
+              </div>
+            </div>
+            <div class="mini-item">
+              <div class="mini-ico">📈</div>
+              <div>
+                <b>Analiz yap</b>
+                <p>Zayıf konu haritanı gör, çalışma süreni veriye çevir.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOP FEATURES (senin 3’lün geliştirilmiş hali) -->
+      <div class="section">
+        <h2 style="margin:6px 0 0;font-size:18px">Öne Çıkanlar</h2>
+        <p class="muted" style="margin:6px 0 0">Sınav hazırlığını “rastgele” değil, sistemli yürüt.</p>
+
+        <div class="grid3">
+          <div class="feat">
+            <div class="head">
+              <div class="icon">🎥</div>
+              <div>
+                <h3>Video Dersler</h3>
+                <p>Kısa özet + detaylı anlatım. Zamanın varsa derinleş, yoksa hızlı tekrar yap.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feat">
+            <div class="head">
+              <div class="icon">🧪</div>
+              <div>
+                <h3>Konu Testleri</h3>
+                <p>Mini quiz + tarama testleri. Hemen geri bildirim al, eksiklerini nokta atışı yakala.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feat">
+            <div class="head">
+              <div class="icon">📊</div>
+              <div>
+                <h3>İlerleme & Analiz</h3>
+                <p>Doğru–yanlış, net trendi, konu bazlı performans ve hedef takibi tek panelde.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOW -->
+      <div class="section">
+        <h2 style="margin:6px 0 0;font-size:18px">Çalışma Akışı</h2>
+        <p class="muted" style="margin:6px 0 0">Platformun mantığı basit: öğren → test et → analiz et → tekrar.</p>
+
+        <div class="flow">
+          <div class="step">
+            <div class="n">1</div>
+            <b>Öğren</b>
+            <p>Video ders + konu özetiyle kavramları oturt. Notlarını aynı ekranda tut.</p>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <b>Test et</b>
+            <p>Konu testleriyle hemen dene. Yanlışlar “neden” sorusunu gösterecek şekilde kaydolur.</p>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <b>Analiz & Plan</b>
+            <p>Zayıf konuları gör, çalışma planını ona göre güncelle. Zamanın boşa gitmesin.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS (görsel güç) -->
+      <div class="section">
+        <h2 style="margin:6px 0 0;font-size:18px">Kısa Özet</h2>
+        <p class="muted" style="margin:6px 0 0">Bunlar demo metinler — gerçek sistemde dinamik olur.</p>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="v">TYT + AYT</div>
+            <div class="k">Tek katalog, tek panel</div>
+          </div>
+          <div class="stat">
+            <div class="v">Konu Bazlı</div>
+            <div class="k">Zayıf alan haritası</div>
+          </div>
+          <div class="stat">
+            <div class="v">Net Takibi</div>
+            <div class="k">Trend & hedefler</div>
+          </div>
+          <div class="stat">
+            <div class="v">Not Sistemi</div>
+            <div class="k">Ders içi hızlı notlar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MORE FEATURES -->
+      <div class="section">
+        <h2 style="margin:6px 0 0;font-size:18px">Daha Fazla Özellik</h2>
+        <p class="muted" style="margin:6px 0 0">SEBA Akademi “tek özellik” değil, tam çalışma sistemi.</p>
+
+        <div class="grid4">
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🗓️</div>
+              <div class="muted">Plan</div>
+            </div>
+            <b>Çalışma Planı</b>
+            <p>Haftalık hedefler, konu listesi ve yapılacaklar tek yerde.</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🧩</div>
+              <div class="muted">Odak</div>
+            </div>
+            <b>Konu Kataloğu</b>
+            <p>TYT/AYT konularını filtrele, arama yap, aç-kapat yönet.</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">📝</div>
+              <div class="muted">Not</div>
+            </div>
+            <b>Akıllı Notlar</b>
+            <p>Derste aldığın notları konuya bağla; tekrar zamanı bul.</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🔁</div>
+              <div class="muted">Tekrar</div>
+            </div>
+            <b>Tekrar Hatırlatıcı</b>
+            <p>Yanlış yaptığın konular için tekrar önerileri (demo).</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🏆</div>
+              <div class="muted">Motivasyon</div>
+            </div>
+            <b>Rozet & Seri</b>
+            <p>Günlük seri, hedef tamamlamaları ve mini başarılar (demo).</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🔎</div>
+              <div class="muted">Arama</div>
+            </div>
+            <b>Hızlı Bul</b>
+            <p>Ders + konu adı birlikte arama. “Basınç”, “Paragraf” vs.</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">📌</div>
+              <div class="muted">Takip</div>
+            </div>
+            <b>Yanlış Defteri</b>
+            <p>Yanlışlarını etiketle, nedenini yaz, tekrarında daha az hata yap.</p>
+          </div>
+
+          <div class="fcard">
+            <div class="toprow">
+              <div class="sico">🛡️</div>
+              <div class="muted">Güven</div>
+            </div>
+            <b>Bulut Senkron</b>
+            <p>Hesapla giriş yapınca cihazlar arası devam (backend ile).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta">
+        <div>
+          <h2>Hazır mısın? Bugün küçük bir adım bile fark yaratır.</h2>
+          <p>Giriş yap, konu kataloğundan bir ders seç ve ilk mini testi çözerek başla.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="login.html">✨ Giriş Yap</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</body>
+
+</html>

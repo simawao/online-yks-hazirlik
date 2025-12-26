@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giriş Yap | YKS Hazırlık Platformu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --bg-secondary: #0f172a;
+      --surface: #1e293b;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --secondary: #8b5cf6;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --success: #22c55e;
+      --error: #ef4444;
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* Background Effects */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow-1 {
+      top: -150px;
+      left: -100px;
+      background: var(--primary);
+    }
+
+    .bg-glow-2 {
+      bottom: -150px;
+      right: -100px;
+      background: var(--secondary);
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+
+    .logo-icon {
+      width: auto;
+      height: auto;
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .login-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .role-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .role-option {
+      position: relative;
+    }
+
+    .role-option input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .role-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .role-option input:checked+.role-label {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .role-label:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.35);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-text {
+      padding: 0 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .login-footer {
+      text-align: center;
+    }
+
+    .login-footer p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .login-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .success-message {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* Demo Accounts Section */
+    .demo-accounts {
+      margin-top: 24px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .demo-accounts-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-account-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .demo-account-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .demo-account-item:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .demo-account-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .demo-account-icon.student {
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .demo-account-icon.admin {
+      background: rgba(139, 92, 246, 0.15);
+    }
+
+    .demo-account-icon.teacher {
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    .demo-account-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .demo-account-role {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .demo-account-credentials {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    }
+
+    .demo-account-fill {
+      font-size: 11px;
+      color: var(--primary);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .demo-account-item:hover .demo-account-fill {
+      opacity: 1;
+    }
+
+    .logo-img {
+      width: 34px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <a href="index.html" class="logo">
+          <div class="logo-icon">
+            <img src="seba.png" alt="SEBA Akademi" class="logo-img">
+          </div>
+
+
+          <span class="logo-text">SEBA Akademi</span>
+        </a>
+        <h1>Giriş Yap</h1>
+        <p>Hesabınıza giriş yaparak devam edin</p>
+      </div>
+
+      <div class="error-message" id="errorMessage"></div>
+      <div class="success-message" id="successMessage"></div>
+
+      <form id="loginForm">
+        <!-- Role Selector -->
+        <div class="role-selector">
+          <label class="role-option">
+            <input type="radio" name="role" value="student" checked>
+            <div class="role-label">🎓 Öğrenci</div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="admin">
+            <div class="role-label">👨‍💼 Yönetici</div>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">E-posta Adresi</label>
+          <input type="email" class="form-input" id="email" placeholder="ornek@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Şifre</label>
+          <input type="password" class="form-input" id="password" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          🔑 Giriş Yap
+        </button>
+      </form>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-text">veya</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="login-footer">
+        <p>Hesabınız yok mu? <a href="register.html">Kayıt Ol</a></p>
+      </div>
+
+      <!-- Demo Accounts Section -->
+      <div class="demo-accounts">
+        <div class="demo-accounts-title">
+          🔑 Demo Hesaplar
+        </div>
+        <div class="demo-account-list" id="demoAccountList">
+          <!-- Demo accounts will be rendered here -->
+        </div>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link">
+      ← Ana Sayfaya Dön
+    </a>
+  </div>
+
+  <script>
+    // Initialize users array if not exists
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify([
+        // Demo admin user
+        { email: 'admin@yks.com', password: 'admin123', name: 'Admin', role: 'admin' },
+        // Demo student user
+        { email: 'ogrenci@yks.com', password: 'ogrenci123', name: 'Demo Öğrenci', role: 'student' },
+        // Demo teacher user
+        { email: 'ogretmen@yks.com', password: 'ogretmen123', name: 'Demo Öğretmen', role: 'teacher' }
+      ]));
+    }
+
+    // Demo accounts configuration
+    const demoAccounts = [
+      {
+        role: 'student',
+        roleLabel: '🎓 Öğrenci',
+        email: 'ogrenci@yks.com',
+        password: 'ogrenci123',
+        icon: '🎓',
+        iconClass: 'student'
+      },
+      {
+        role: 'admin',
+        roleLabel: '👨‍💼 Yönetici',
+        email: 'admin@yks.com',
+        password: 'admin123',
+        icon: '👨‍💼',
+        iconClass: 'admin'
+      },
+
+    ];
+
+    // Render demo accounts
+    function renderDemoAccounts() {
+      const container = document.getElementById('demoAccountList');
+      container.innerHTML = demoAccounts.map(account => `
+        <div class="demo-account-item" onclick="fillDemoCredentials('${account.email}', '${account.password}', '${account.role}')">
+          <div class="demo-account-icon ${account.iconClass}">${account.icon}</div>
+          <div class="demo-account-info">
+            <div class="demo-account-role">${account.roleLabel}</div>
+            <div class="demo-account-credentials">${account.email}</div>
+          </div>
+          <span class="demo-account-fill">Doldur →</span>
+        </div>
+      `).join('');
+    }
+
+    // Fill demo credentials into form
+    function fillDemoCredentials(email, password, role) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = password;
+
+      // Select the appropriate role radio button
+      const roleRadio = document.querySelector(`input[name="role"][value="${role === 'teacher' ? 'admin' : role}"]`);
+      if (roleRadio) {
+        roleRadio.checked = true;
+      }
+
+      // Focus on submit button
+      document.querySelector('.btn-primary').focus();
+    }
+
+    // Initialize demo accounts display
+    renderDemoAccounts();
+
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.querySelector('input[name="role"]:checked').value;
+
+      // Hide previous messages
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      // Get users from localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      // Find user
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (!user) {
+        errorMessage.textContent = 'E-posta veya şifre hatalı!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Check role match
+      if (user.role !== role) {
+        errorMessage.textContent = `Bu hesap ${user.role === 'admin' ? 'yönetici' : 'öğrenci'} hesabıdır. Lütfen doğru rolü seçin.`;
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Save current session
+      localStorage.setItem('currentUser', JSON.stringify({
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        loggedIn: true
+      }));
+
+      successMessage.textContent = 'Giriş başarılı! Yönlendiriliyorsunuz...';
+      successMessage.style.display = 'block';
+
+      // Redirect based on role
+      setTimeout(() => {
+        if (user.role === 'admin') {
+          window.location.href = 'admin_dashboard.html';
+        } else {
+          window.location.href = 'student_dashboard.html';
+        }
+      }, 1000);
+    });
+
+    // Check if already logged in
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser && currentUser.loggedIn) {
+      if (currentUser.role === 'admin') {
+        window.location.href = 'admin_dashboard.html';
+      } else {
+        window.location.href = 'student_dashboard.html';
+      }
+    }
+  </script>
+</body>
+
+</html>

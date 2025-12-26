@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dersler | YKS Hazırlık Platformu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0f1a;
+            --bg-secondary: #0f172a;
+            --surface: #1e293b;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow-1 {
+            top: -200px;
+            left: -100px;
+            background: var(--primary);
+        }
+
+        .bg-glow-2 {
+            bottom: -200px;
+            right: -100px;
+            background: var(--secondary);
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 15, 26, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--text);
+        }
+
+        .breadcrumb-sep {
+            opacity: 0.5;
+        }
+
+        .breadcrumb-current {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        /* Main */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .category-tab {
+            flex: 1;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .category-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
+        .category-tab.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .category-tab .tab-icon {
+            font-size: 24px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .course-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+        }
+
+        .course-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .course-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 16px;
+        }
+
+        .course-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .course-stat-icon {
+            font-size: 14px;
+        }
+
+        .course-progress {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .progress-label {
+            color: var(--text-muted);
+        }
+
+        .progress-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-tabs {
+                flex-direction: column;
+            }
+
+            .header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="student_dashboard.html" class="logo">
+                    <div class="logo-icon">📚</div>
+                    <span class="logo-text">SEBA Akademi</span>
+                </a>
+                <nav class="breadcrumb">
+                    <a href="student_dashboard.html">Ana Panel</a>
+                    <span class="breadcrumb-sep">›</span>
+                    <span class="breadcrumb-current" id="breadcrumbCategory">TYT Dersleri</span>
+                </nav>
+            </div>
+            <div class="header-right">
+                <a href="student_dashboard.html" class="btn btn-outline">← Panele Dön</a>
+                <button class="btn btn-danger" onclick="logout()">🚪 Çıkış</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab active" data-category="tyt" onclick="switchCategory('tyt')">
+                <span class="tab-icon">📘</span>
+                TYT - Temel Yeterlilik
+            </button>
+            <button class="category-tab" data-category="ayt" onclick="switchCategory('ayt')">
+                <span class="tab-icon">📗</span>
+                AYT - Alan Yeterlilik
+            </button>
+        </div>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 id="pageTitle">📘 TYT Dersleri</h1>
+            <p id="pageDesc">Temel Yeterlilik Testi için tüm dersler. Bir ders seçerek konulara göz atabilirsin.</p>
+        </div>
+
+        <!-- Courses Grid -->
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Courses will be loaded here -->
+        </div>
+    </main>
+
+    <script>
+        // Check authentication
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || !currentUser.loggedIn) {
+            window.location.href = 'login.html';
+        }
+
+        // Course data
+        const coursesData = {
+            tyt: [
+                { id: 'mat', name: 'Matematik', icon: '📐', desc: 'Sayılar, cebir, geometri ve problem çözme', topics: 45, videos: 120 },
+                { id: 'trk', name: 'Türkçe', icon: '📝', desc: 'Dil bilgisi, paragraf ve söz sanatları', topics: 32, videos: 85 },
+                { id: 'fiz', name: 'Fizik', icon: '⚡', desc: 'Kuvvet, hareket, enerji ve dalgalar', topics: 28, videos: 75 },
+                { id: 'kim', name: 'Kimya', icon: '🧪', desc: 'Madde, atom, bağlar ve reaksiyonlar', topics: 26, videos: 70 },
+                { id: 'bio', name: 'Biyoloji', icon: '🧬', desc: 'Hücre, canlılar ve ekosistem', topics: 24, videos: 65 },
+                { id: 'tar', name: 'Tarih', icon: '📜', desc: 'Türk ve dünya tarihi', topics: 22, videos: 60 },
+                { id: 'cog', name: 'Coğrafya', icon: '🌍', desc: 'Fiziki ve beşeri coğrafya', topics: 20, videos: 55 },
+                { id: 'fel', name: 'Felsefe', icon: '🤔', desc: 'Felsefeye giriş ve düşünce tarihi', topics: 12, videos: 35 },
+                { id: 'din', name: 'Din Kültürü', icon: '🕌', desc: 'İslam ve diğer dinler', topics: 10, videos: 30 }
+            ],
+            ayt: [
+                { id: 'ayt-mat', name: 'Matematik', icon: '📊', desc: 'İleri düzey matematik ve analiz', topics: 55, videos: 150 },
+                { id: 'ayt-fiz', name: 'Fizik', icon: '🔭', desc: 'Modern fizik ve ileri konular', topics: 35, videos: 95 },
+                { id: 'ayt-kim', name: 'Kimya', icon: '⚗️', desc: 'Organik kimya ve ileri konular', topics: 32, videos: 85 },
+                { id: 'ayt-bio', name: 'Biyoloji', icon: '🔬', desc: 'Genetik ve ileri biyoloji', topics: 28, videos: 75 },
+                { id: 'edeb', name: 'Edebiyat', icon: '📖', desc: 'Türk edebiyatı tarihi ve eserleri', topics: 40, videos: 110 },
+                { id: 'ayt-tar1', name: 'Tarih-1', icon: '🏛️', desc: 'Osmanlı ve Türkiye tarihi', topics: 25, videos: 70 },
+                { id: 'ayt-tar2', name: 'Tarih-2', icon: '⚔️', desc: 'Dünya tarihi', topics: 20, videos: 55 },
+                { id: 'ayt-cog', name: 'Coğrafya', icon: '🗺️', desc: 'İleri düzey coğrafya', topics: 22, videos: 60 },
+                { id: 'ayt-fel', name: 'Felsefe Grubu', icon: '💭', desc: 'Psikoloji, sosyoloji, mantık', topics: 18, videos: 50 }
+            ]
+        };
+
+        let currentCategory = 'tyt';
+
+        // Get URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryParam = urlParams.get('category');
+        if (categoryParam === 'ayt') {
+            currentCategory = 'ayt';
+        }
+
+        // Switch category
+        function switchCategory(category) {
+            currentCategory = category;
+
+            // Update tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.category === category);
+            });
+
+            // Update header
+            if (category === 'tyt') {
+                document.getElementById('pageTitle').textContent = '📘 TYT Dersleri';
+                document.getElementById('pageDesc').textContent = 'Temel Yeterlilik Testi için tüm dersler. Bir ders seçerek konulara göz atabilirsin.';
+                document.getElementById('breadcrumbCategory').textContent = 'TYT Dersleri';
+            } else {
+                document.getElementById('pageTitle').textContent = '📗 AYT Dersleri';
+                document.getElementById('pageDesc').textContent = 'Alan Yeterlilik Testi için tüm dersler. Hedefine uygun dersleri seç.';
+                document.getElementById('breadcrumbCategory').textContent = 'AYT Dersleri';
+            }
+
+            // Update URL
+            history.replaceState(null, '', `?category=${category}`);
+
+            renderCourses();
+        }
+
+        // Get user progress
+        function getUserProgress(courseId) {
+            const progress = JSON.parse(localStorage.getItem(`progress_${currentUser.email}`)) || {};
+            return progress[courseId] || 0;
+        }
+
+        // Render courses
+        function renderCourses() {
+            const grid = document.getElementById('coursesGrid');
+            const courses = coursesData[currentCategory];
+
+            grid.innerHTML = courses.map(course => {
+                const progress = getUserProgress(course.id);
+                return `
+          <a href="topics.html?category=${currentCategory}&course=${course.id}" class="course-card">
+            <div class="course-icon">${course.icon}</div>
+            <h3 class="course-title">${course.name}</h3>
+            <p class="course-desc">${course.desc}</p>
+            <div class="course-stats">
+              <span class="course-stat">
+                <span class="course-stat-icon">📚</span>
+                ${course.topics} Konu
+              </span>
+              <span class="course-stat">
+                <span class="course-stat-icon">🎬</span>
+                ${course.videos} Video
+              </span>
+            </div>
+            <div class="course-progress">
+              <div class="progress-header">
+                <span class="progress-label">İlerleme</span>
+                <span class="progress-value">%${progress}</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${progress}%"></div>
+              </div>
+            </div>
+          </a>
+        `;
+            }).join('');
+        }
+
+        // Initialize
+        switchCategory(currentCategory);
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

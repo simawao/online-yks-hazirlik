@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSS | SEBA Akademi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #0f172a;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --brand: #3b82f6;
+      --brand-2: #7c3aed;
+      --glass: rgba(255, 255, 255, .06);
+      --radius: 18px;
+      --border: rgba(255, 255, 255, .08);
+
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(59, 130, 246, .15), transparent),
+        radial-gradient(1000px 500px at 110% 10%, rgba(124, 58, 237, .15), transparent),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin-inline: auto
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: linear-gradient(to bottom, rgba(11, 18, 32, .9), rgba(11, 18, 32, .45));
+      border-bottom: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .logo-img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      /* tamamen düz istersen 0 yap */
+      background: transparent;
+      /* kutu görünümü yok */
+      box-shadow: none;
+      outline: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      cursor: pointer;
+      font-weight: 650;
+      transition: .18s transform, .18s filter, .18s background;
+      user-select: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05)
+    }
+
+    /* NAV butonlarını diğer sayfalardaki gibi daha "pill" göster */
+    .nav-links a.btn:not(.btn-primary) {
+
+      display: inline-flex !important;
+      background: var(--glass) !important;
+      border: 1px solid var(--border) !important;
+      padding: 10px 14px !important;
+      border-radius: 12px !important;
+    }
+
+    .btn {
+      transition: .18s transform, .18s filter, .18s background;
+    }
+
+    /* Hover efekti (diğerlerindeki gibi) */
+    .nav-links .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    /* Aktif sayfa (SSS) için seçili görünüm */
+    .nav-links .btn.active {
+      background: linear-gradient(135deg, rgba(59, 130, 246, .30), rgba(124, 58, 237, .26));
+      border-color: rgba(255, 255, 255, .14);
+    }
+
+    .btn-primary {
+      border-radius: 14px;
+      /* diğerleriyle birebir */
+      padding: 10px 16px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      border: 1px solid rgba(255, 255, 255, .18);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.07);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      align-items: center
+    }
+
+    main {
+      padding: 40px 0 60px
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, .08);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 4px
+    }
+
+    .lead {
+      color: var(--muted);
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 14px
+    }
+
+    details {
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(15, 23, 42, .9);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    details+details {
+      margin-top: 8px
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px
+    }
+
+    summary::-webkit-details-marker {
+      display: none
+    }
+
+    summary::after {
+      content: '+';
+      float: right;
+      font-weight: 700;
+      color: var(--muted);
+      transition: transform .2s;
+    }
+
+    details[open] summary::after {
+      content: '−'
+    }
+
+    details p {
+      margin: 8px 0 4px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .category-title {
+      margin: 22px 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: #cbd5f5;
+    }
+
+    .category-title span {
+      opacity: .65;
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: none;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid rgba(148, 163, 184, .3);
+      margin: 22px 0;
+    }
+
+    .badge-cat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, .9);
+      border: 1px solid rgba(148, 163, 184, .45);
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    @media(max-width:768px) {
+      .nav-links {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="seba.png" alt="SEBA Akademi" class="logo-img">
+        <b>SEBA Akademi</b>
+      </a>
+      <div class="nav-links">
+        <a href="features.html" class="btn">Özellikler</a>
+        <a href="catalog.html" class="btn">Konu Kataloğu</a>
+        <a href="faq.html" class="btn active">SSS</a>
+        <a href="login.html" class="btn btn-primary">Giriş Yap</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="card">
+      <h1>Sıkça Sorulan Sorular</h1>
+      <p class="lead">
+        SEBA Akademi ile ilgili aklına takılan pek çok sorunun cevabını aşağıda bulabilirsin.
+        Sorunun burada yoksa bizimle iletişim kurarak destek alabilirsin.
+      </p>
+
+      <!-- GENEL SORULAR -->
+      <div class="category-title">
+        Genel Sorular <span>• Platform yapısı ve kullanım hakkında</span>
+      </div>
+
+      <details open>
+        <summary>SEBA Akademi tam olarak nasıl bir platform?</summary>
+        <p>SEBA Akademi, TYT ve AYT hazırlık sürecini tek ekranda toplamak için tasarlanmış; video ders, konu testleri,
+          deneme analizi ve kişisel çalışma planı özelliklerini bir araya getiren çevrim içi bir YKS hazırlık
+          platformudur.</p>
+      </details>
+
+      <details>
+        <summary>Platformu kullanmak için bilgisayara program indirmem gerekiyor mu?</summary>
+        <p>Hayır. SEBA Akademi tamamen tarayıcı üzerinden çalışır. Sadece internet bağlantısı olan bir cihaz ve modern
+          bir tarayıcı (Chrome, Edge, Safari vb.) yeterlidir.</p>
+      </details>
+
+      <details>
+        <summary>Telefon veya tablet üzerinden de kullanabilir miyim?</summary>
+        <p>Evet. Arayüz mobil uyumludur. Tarayıcı üzerinden telefonda ve tablette de panelini kullanabilir, video
+          izleyip test çözebilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Platformu günlük ne kadar kullanmam gerekiyor?</summary>
+        <p>Bu tamamen hedefine bağlıdır. Ancak sistem, belirlediğin hedef net ve çalışma süresine göre sana
+          günlük/haftalık önerilen çalışma miktarını gösterir.</p>
+      </details>
+
+      <hr>
+
+      <!-- PLAN & SATIN ALMA -->
+      <div class="category-title">
+        Plan &amp; Satın Alma <span>• Paketler, ücretlendirme ve iade süreçleri</span>
+      </div>
+
+      <details>
+        <summary>TYT ve AYT içerikleri için ayrı paketler mi var?</summary>
+        <p>Evet. Sadece TYT konularına erişebileceğin <b>TYT Temel</b> paketi ve hem TYT hem AYT içeriklerini açan
+          <b>TYT + AYT</b> paketi bulunmaktadır.</p>
+      </details>
+
+      <details>
+        <summary>Satın almadan önce platformu deneme imkanım var mı?</summary>
+        <p>Evet. Hesap oluşturduğunda örnek ders videoları, bazı konu testleri ve öğrenci panelinin demo sürümü ücretsiz
+          olarak açıktır.</p>
+      </details>
+
+      <details>
+        <summary>Plan satın aldıktan sonra iade edebilir miyim?</summary>
+        <p>Satın alma tarihinden itibaren <b>7 gün içerisinde</b> koşulsuz iade talebinde bulunabilirsin. Bu süre içinde
+          memnun kalmazsan ücretin iade edilir.</p>
+      </details>
+
+      <details>
+        <summary>Plan sürem bitince abonelik otomatik yenileniyor mu?</summary>
+        <p>Hayır. Paket süresi bittiğinde abonelik otomatik yenilenmez. Devam etmek istersen panel üzerinden yeniden
+          plan seçimi yapman gerekir.</p>
+      </details>
+
+      <details>
+        <summary>Plan değişikliği yapabilir miyim?</summary>
+        <p>Evet. Sadece TYT planındaysan daha sonra TYT+AYT paketine yükseltme yapabilirsin. Mevcut süren dikkate
+          alınarak paket güncellemesi yapılır (demo ortamında bu işlem simülasyon amaçlıdır).</p>
+      </details>
+
+      <hr>
+
+      <!-- İÇERİK & VİDEO DERSLERİ -->
+      <div class="category-title">
+        İçerik &amp; Video Dersler <span>• Ders yapısı ve içerik kapsamı</span>
+      </div>
+
+      <details>
+        <summary>Video derslerin süresi ne kadar? Çok uzun mu?</summary>
+        <p>Videolar iki formattadır: hızlı tekrar için 5–15 dakikalık kısa özetler ve konuyu detaylı işleyen 20–45
+          dakikalık kapsamlı dersler. Böylece aynı konuyu farklı derinliklerde çalışabilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Tüm TYT ve AYT konuları platformda var mı?</summary>
+        <p>Ana müfredat kapsamındaki temel TYT ve AYT konularının tamamı için içerik sağlanması hedeflenir. Yeni
+          müfredat güncellemelerine göre içerik listesi düzenli olarak güncellenir.</p>
+      </details>
+
+      <details>
+        <summary>Video hızını değiştirebiliyor muyum?</summary>
+        <p>Evet. Desteklenen oynatıcılarda 0.75x, 1x, 1.25x, 1.5x ve 2x hız seçenekleriyle videoları izleyebilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Video derslere PDF not veya doküman eşlik ediyor mu?</summary>
+        <p>Pek çok derste video ile birlikte indirilebilir PDF özetler, soru çözümleri ve konu tarama listeleri yer
+          alır. Bu içerikler düzenli olarak genişletilir.</p>
+      </details>
+
+      <hr>
+
+      <!-- TEST & ANALİZ SİSTEMİ -->
+      <div class="category-title">
+        Test &amp; Analiz Sistemi <span>• Net hesaplama, deneme analizi ve zayıf konular</span>
+      </div>
+
+      <details>
+        <summary>Çözdüğüm testler sisteme kaydediliyor mu?</summary>
+        <p>Evet. Her test bitiminde doğru, yanlış ve boş sayın kaydedilir. Sistem bu verilere göre netini hesaplar ve
+          zayıf olduğun konu başlıklarını listeler.</p>
+      </details>
+
+      <details>
+        <summary>Deneme sınav sonuçlarımı da panele işleyebilir miyim?</summary>
+        <p>Evet. Öğrenci panelinde <b>Deneme Ekle</b> alanından çözdüğün denemelerin ders bazlı netlerini girerek
+          ilerleme grafiğinde takip edebilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Sistem bana tekrar etmem gereken konuları gösteriyor mu?</summary>
+        <p>Evet. Çok yanlış yaptığın veya uzun süredir çözmediğin konular "Tekrar Önerileri" listesinde öne çıkarılır.
+          Böylece ne çalışman gerektiğini kolayca görürsün.</p>
+      </details>
+
+      <details>
+        <summary>Günlük ve haftalık çalışma hedefleri nasıl belirleniyor?</summary>
+        <p>Önce hedef netini ve haftada ne kadar süre ayırabileceğini tanımlarsın. Sistem bu bilgilere göre günlük soru
+          sayısı ve video izleme hedefi önerir.</p>
+      </details>
+
+      <hr>
+
+      <!-- TEKNİK SORUNLAR -->
+      <div class="category-title">
+        Teknik Sorunlar <span>• Giriş, cihaz, performans ve bağlantı</span>
+      </div>
+
+      <details>
+        <summary>Hesabıma giremiyorum, ne yapmalıyım?</summary>
+        <p>Öncelikle kullandığın e-posta adresini ve şifreni kontrol et. Sorun devam ederse tarayıcı önbelleğini
+          temizleyip tekrar dene. Demo sürümdeysen yeni bir kullanıcı ile yeniden giriş yapabilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Video açılmıyor veya çok yavaş yükleniyor, neden?</summary>
+        <p>Bu durum çoğunlukla internet hızından kaynaklanır. Farklı bir tarayıcı denemeyi, gereksiz sekmeleri kapatmayı
+          ve mümkünse Wi-Fi yerine kablolu bağlantı kullanmayı deneyebilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Farklı cihazlardan giriş yapmam bir sorun oluşturur mu?</summary>
+        <p>Hayır. Aynı hesabınla bilgisayar, tablet ve telefon üzerinden giriş yapabilirsin. Kayıtlı notların ve test
+          sonuçların senkronize şekilde görünür.</p>
+      </details>
+
+      <details>
+        <summary>Şifremi unuttum, nasıl sıfırlayacağım? (Gerçek sistemde)</summary>
+        <p>Gerçek üretim ortamında “Şifremi Unuttum” bağlantısı üzerinden e-posta adresine gelen link ile şifreni
+          sıfırlayabilirsin. Demo ortamında bu işlem sembolik olarak gösterilir.</p>
+      </details>
+
+      <hr>
+
+      <!-- ÖĞRENCİ PANELİ KULLANIMI -->
+      <div class="category-title">
+        Öğrenci Paneli Kullanımı <span>• Çalışma alanı, notlar ve ilerleme takibi</span>
+      </div>
+
+      <details>
+        <summary>Öğrenci panelinde neleri görebiliyorum?</summary>
+        <p>Son izlediğin dersler, çözdüğün testler, deneme sonuçların, günlük/haftalık çalışma sürelerin ve kişisel not
+          defterin tek ekranda listelenir.</p>
+      </details>
+
+      <details>
+        <summary>Panelde tuttuğum notlar silinir mi?</summary>
+        <p>Hayır. Notların hesabına bağlıdır ve plan süresinden bağımsız olarak saklanır. Planın bitse bile yeniden
+          giriş yaptığında notlarını görebilirsin.</p>
+      </details>
+
+      <details>
+        <summary>Çalışma geçmişimi dışa aktarabilir miyim? (PDF/Excel)</summary>
+        <p>Gerçek sistemde deneme sonuçları ve çalışma istatistiklerinin PDF/Excel olarak dışa aktarılması
+          planlanmaktadır. Demo sürümde bu özellik maket olarak gösterilir.</p>
+      </details>
+
+      <details>
+        <summary>Hedeflerimi sonradan güncelleyebilir miyim?</summary>
+        <p>Evet. Öğrenci panelindeki ayarlar bölümünden hedef netlerini ve haftalık çalışma süreni güncelleyebilirsin.
+          Sistem yeni hedefe göre planını yeniden hesaplar.</p>
+      </details>
+
+      <hr>
+
+      <!-- KURUMSAL PAKETLER -->
+      <div class="category-title">
+        Kurumsal Paketler <span>• Okul ve kurslar için toplu kullanım</span>
+      </div>
+
+      <details>
+        <summary>Okul veya kurs olarak toplu lisans alabilir miyiz?</summary>
+        <p>Evet. Kurumsal paketler ile belirli sayıda öğrenci için toplu lisans satın alabilir, yönetici paneli
+          üzerinden öğrencilerin ilerlemesini takip edebilirsiniz.</p>
+      </details>
+
+      <details>
+        <summary>Kurumsal paketlerde öğretmen paneli var mı?</summary>
+        <p>Evet. Öğretmen veya danışmanlar için hazırlanan panel ile öğrencilerin test sonuçlarını, net gelişimlerini ve
+          aktiflik durumlarını görebilirsiniz.</p>
+      </details>
+
+      <details>
+        <summary>Kurumsal paketler için fiyatlandırma nasıl belirleniyor?</summary>
+        <p>Öğrenci sayısı, paket süresi ve istenen özelliklere göre özelleştirilmiş teklif oluşturulur. Detaylı bilgi
+          için “Kurumsal” bölümünden bizimle iletişime geçebilirsiniz.</p>
+      </details>
+
+      <details>
+        <summary>Kendi müfredatımızı sisteme ekleyebilir miyiz?</summary>
+        <p>Evet. Kurumsal çözümlerde okul veya kursun kendi müfredatı, deneme sınavları ve özel içerikleri sisteme
+          entegre edilebilir.</p>
+      </details>
+    </div>
+  </main>
+</body>
+
+</html>
